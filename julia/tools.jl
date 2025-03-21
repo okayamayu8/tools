@@ -1,3 +1,21 @@
+using Revise
+using Healpix
+using LinearAlgebra
+using StaticArrays
+using Base.Threads
+using WignerD
+using BenchmarkTools
+using NPZ
+using Plots
+using PyPlot
+using PyCall
+using DataStructures
+using HDF5
+using Falcons
+
+hp = pyimport("healpy")
+
+
 function truncate_alm(alm; lmax_in, lmax_out, mmax_out)
 
     """
@@ -29,4 +47,8 @@ function truncate_alm(alm; lmax_in, lmax_out, mmax_out)
     end
     
     return alm_new
+end
+
+function alm_idx(l, m::Integer, lmax::Integer)
+    return Int(m * (2 * lmax + 1 - m) // 2 + l)+1
 end
